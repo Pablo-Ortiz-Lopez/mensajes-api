@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/",
+  "title": "InventoryItem",
+  "type": "object",
+  "properties": {
+    "startPoint": {
+      "lat": "number",
+      "lon": "number"
+    }
+  },
+  "required": ["startPoint"]
+}
