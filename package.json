@@ -65,7 +65,7 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "pro": "yarn install && yarn run build && NODE_ENV=dev pm2 start ./dist/bin/server.js --name mensajes-api",
+    "pro": "yarn install && yarn run build && NODE_ENV=pro pm2 start ./dist/bin/server.js --name mensajes-api",
     "deploy": "git pull && yarn install && yarn run build && pm2 restart mensajes-api",
     "dev": "nodemon",
     "build": "rimraf dist && babel src --out-dir dist",
