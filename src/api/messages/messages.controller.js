@@ -9,7 +9,8 @@ export default class Controller {
     add = async (req, res) => {
 
         try {
-            const {userId,decoded} = req.body;
+            const {decoded} = req.body;
+            const {userId} = req;
 
             const allMessages =  await Message.find({userId:userId}).exec()
             let crcSum = 0;
@@ -33,7 +34,8 @@ export default class Controller {
 
     update = async (req, res) => {
         try {
-            const {_id, userId, decoded} = req.body;
+            const {_id, decoded} = req.body;
+            const {userId} = req;
             const allMessages =  await Message.find({userId:userId}).exec()
 
             const newCrc = crc8.checksum(decoded)
@@ -77,7 +79,8 @@ export default class Controller {
 
     delete = async (req, res) => {
         try {
-            const {_id, userId} = req.body;
+            const {_id} = req.body;
+            const {userId} = req;
             const allMessages =  await Message.find({userId:userId}).exec()
 
             let crcDiff = 0;
@@ -113,7 +116,7 @@ export default class Controller {
 
     findAll = async (req, res) => {
         try {
-            const {userId} = req.body;
+            const {userId} = req;
             const allMessages =  await Message.find({userId:userId}).exec()
             const decodedMessages = []
             let crcSum = 0;
