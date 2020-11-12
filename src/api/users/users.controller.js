@@ -45,7 +45,25 @@ export default class Controller {
                 expiresIn: JWT.tokenExpiration,
             });
             res.cookie('jwtToken',jwtToken)
-            return res.status(200).send({jwtToken})
+            return res.status(200).send('OK')
+
+        } catch (err) {
+            res.status(500).send({
+                message: err.toString(),
+            });
+        }
+    }
+
+
+    credentials = async(req,res) => {
+        try{
+            const {userId} = req
+            const user = await User.findOne({_id: userId})
+            if(!user){
+                return req.status(404).send({message:'Not found'})
+            }
+
+            return res.status(200).send(user.toObject())
 
         } catch (err) {
             res.status(500).send({

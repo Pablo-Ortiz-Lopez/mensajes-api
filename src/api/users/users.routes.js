@@ -8,6 +8,9 @@ const controller = new Controller();
 /* User login */
 router.post('/login', controller.login);
 
+/* GET credentials */
+router.get('/credentials', auth, controller.credentials);
+
 /* User signup */
 router.post('/register', controller.register);
 
