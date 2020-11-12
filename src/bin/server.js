@@ -17,7 +17,7 @@ const debug = debugLib('myapp:server');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3977');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -32,10 +32,10 @@ const server = (()=> {
       key: key,
       cert: cert,
     };
-    console.log('Deploy finished: Running parkink-api in HTTPS mode')
+    console.log('Deploy finished: Running mensajes-api in HTTPS mode')
     return https.createServer(options,app);
   } else {
-    console.log('Deploy finished: Running parkink-api in HTTP mode')
+    console.log('Deploy finished: Running mensajes-api in HTTP mode')
     return http.createServer(app);
   }
 })()
