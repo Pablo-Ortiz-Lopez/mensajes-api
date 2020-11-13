@@ -1,6 +1,7 @@
 import Message from './messages.model'
 import CRC8 from 'src/utils/crc8'
 import Caesar from "src/utils/caesar";
+import {updateAndPropagate} from "./messages.utils";
 
 const crc8 = new CRC8();
 const caesar = new Caesar();
@@ -43,36 +44,7 @@ export default class Controller {
             }
             const allMessages =  await Message.find({userId:userId}).exec()
 
-            const newCrc = crc8.checksum(decoded)
-            let crcDiff = 0;
-            let crcSum = 0;
-            let nextMessage;
-            for(let i = 0; i<allMessages.length; i++){
-                const message = allMessages[i]
-                if(message._id.toString() === _id){
-                    crcDiff = newCrc - message.crc
-                    if(allMessages[i+1]){
-                        nextMessage = allMessages[i+1]
-                    }
-                    break;
-                }
-                crcSum += message.crc
-            }
-
-            await Message.findOneAndUpdate(
-                {_id},
-                {
-                    crc: newCrc,
-                    encoded: caesar.cypher(decoded,crcSum)
-                }).exec();
-
-            if(nextMessage){
-                await Message.findOneAndUpdate(
-                    {_id: nextMessage._id},
-                    {
-                        encoded: caesar.cypher(nextMessage.encoded,crcDiff) // Apply updated cypher
-                    }).exec();
-            }
+            await updateAndPropagate(allMessages, decoded, _id)
 
             res.status(201).send({updated:_id});
         } catch (err) {
@@ -92,28 +64,8 @@ export default class Controller {
 
             const allMessages =  await Message.find({userId:userId}).exec()
 
-            let crcDiff = 0;
-            let nextMessage;
-            for(let i = 0; i<allMessages.length; i++){
-                const message = allMessages[i]
-                if(message._id.toString() === _id){
-                    crcDiff = -1 * message.crc
-                    if(allMessages[i+1]){
-                        nextMessage = allMessages[i+1]
-                    }
-                    break;
-                }
-            }
+            await updateAndPropagate(allMessages, null, _id)
 
-            await Message.findOneAndDelete({_id}).exec();
-
-            if(nextMessage){
-                await Message.findOneAndUpdate(
-                    {_id: nextMessage._id},
-                    {
-                        encoded: caesar.cypher(nextMessage.encoded,crcDiff) // Apply updated cypher
-                    }).exec();
-            }
             res.status(201).send({deleted:_id});
         } catch (err) {
             res.status(500).send({
