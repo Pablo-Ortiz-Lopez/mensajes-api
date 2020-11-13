@@ -7,6 +7,7 @@ export default class Caesar { // constructor takes an optional polynomial type f
     }
 
     cypher = function (text, factor) {
+        if(!factor) return text
         let out = ''
         for(let i = 0; i< text.length; i++){
             const len = this.alphabet.length

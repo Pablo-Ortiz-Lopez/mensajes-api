@@ -7,10 +7,12 @@ const caesar = new Caesar();
 
 export default class Controller {
     add = async (req, res) => {
-
         try {
             const {decoded} = req.body;
             const {userId} = req;
+            if(!decoded || !userId){
+                return req.status(401).send({message: 'Bad request'})
+            }
 
             const allMessages =  await Message.find({userId:userId}).exec()
             let crcSum = 0;
@@ -36,6 +38,9 @@ export default class Controller {
         try {
             const {_id, decoded} = req.body;
             const {userId} = req;
+            if(!_id || !decoded || !userId){
+                return req.status(401).send({message: 'Bad request'})
+            }
             const allMessages =  await Message.find({userId:userId}).exec()
 
             const newCrc = crc8.checksum(decoded)
@@ -81,6 +86,10 @@ export default class Controller {
         try {
             const {_id} = req.body;
             const {userId} = req;
+            if(!_id || !userId){
+                return req.status(401).send({message: 'Bad request'})
+            }
+
             const allMessages =  await Message.find({userId:userId}).exec()
 
             let crcDiff = 0;
@@ -117,6 +126,10 @@ export default class Controller {
     findAll = async (req, res) => {
         try {
             const {userId} = req;
+            if(!userId){
+                return req.status(401).send({message: 'Bad request'})
+            }
+
             const allMessages =  await Message.find({userId:userId}).exec()
             const decodedMessages = []
             let crcSum = 0;
