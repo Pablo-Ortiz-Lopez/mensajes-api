@@ -1,12 +1,8 @@
+export default class CRC8 { // 'Class' for calculating CRC8 checksums
 
-// "Class" for calculating CRC8 checksums...
-export default class CRC8 { // constructor takes an optional polynomial type from CRC8.POLY
-
-    constructor(poly,initial) {
-        let polynomial
-        polynomial = poly ? poly : this.POLY.CRC8_CCITT
+    constructor() {
+        let polynomial = 0x07
         this.table = this.generateTable(polynomial)
-        this.initial_value = initial
     }
 
     checksum = function (text) {
@@ -14,7 +10,7 @@ export default class CRC8 { // constructor takes an optional polynomial type fro
             return x.charCodeAt(0)
         })
 
-        let c = this.initial_value;
+        let c = 0;
 
         for (let i = 0; i < byte_array.length; i++)
             c = this.table[(c ^ byte_array[i]) % 256]
@@ -38,13 +34,5 @@ export default class CRC8 { // constructor takes an optional polynomial type fro
         }
 
         return csTable
-    }
-
-    POLY = {
-        CRC8: 0xd5,
-        CRC8_CCITT: 0x07,
-        CRC8_DALLAS_MAXIM: 0x31,
-        CRC8_SAE_J1850: 0x1D,
-        CRC_8_WCDMA: 0x9b,
     }
 }

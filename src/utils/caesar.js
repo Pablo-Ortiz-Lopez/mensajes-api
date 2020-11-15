@@ -1,6 +1,5 @@
 
-// "Class" for calculating CRC8 checksums...
-export default class Caesar { // constructor takes an optional polynomial type from CRC8.POLY
+export default class Caesar { // 'Class' for calculating caesar cyphers
 
     constructor() {
         this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
