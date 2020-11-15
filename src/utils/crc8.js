@@ -11,7 +11,6 @@ export default class CRC8 { // 'Class' for calculating CRC8 checksums
         })
 
         let c = 0;
-
         for (let i = 0; i < byte_array.length; i++)
             c = this.table[(c ^ byte_array[i]) % 256]
 
