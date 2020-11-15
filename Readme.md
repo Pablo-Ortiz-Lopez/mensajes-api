@@ -20,11 +20,11 @@ Any changes will trigger a server restart.
 
 ### Deploy in server
 
-To deploy in server you will need to have `pm2` installed.
+To deploy in server you will need to have `pm2` installed. You will also need to setup the SSL certificates and update their path in `src/bin/server.js`.
 
 To start the server for the first time, run: `yarn run pro`, then execute `yarn run deploy` to restart the API with the latest changes.
 
-In the **Production Environment**, the server will run in HTTPS mode, so it will be accessible through `https://parkink.cat:3000/`
+In the **Production Environment**, the server will run in HTTPS mode, so it will be accessible through `https://{{your domain}}:3000/`
 
 It is recommended you bind the execution of `yarn run deploy` to this repository web-hook push event.
 
