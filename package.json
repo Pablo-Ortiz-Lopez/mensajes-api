@@ -1,7 +1,7 @@
 {
   "name": "mensajes-api",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "author": {
     "name": "Pablo Ortiz López",
     "url": "https://github.com/Pablo-Ortiz-Lopez"
